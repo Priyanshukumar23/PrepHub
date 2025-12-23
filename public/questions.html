@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequently Asked Questions - Interview Prep Hub</title>
+    <link rel="stylesheet" href="hub.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <a href="index.html" class="nav-back">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <header>
+            <h1>Interview Questions</h1>
+            <p class="subtitle">Common technical and behavioral questions to help you prepare.</p>
+        </header>
+
+        <div class="content-wrapper">
+            <!-- Question 1 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>1. What is the difference between specific var, let, and const in JavaScript?</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>
+                        <strong>var</strong> is function-scoped and can be redeclared and updated. It is hoisted to the
+                        top of its scope.<br><br>
+                        <strong>let</strong> is block-scoped, can be updated but not redeclared within the same
+                        scope.<br><br>
+                        <strong>const</strong> is block-scoped and cannot be updated or redeclared. It must be
+                        initialized during declaration.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>2. Explain the concept of "Close" in JavaScript.</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>
+                        A closure is the combination of a function bundled together (enclosed) with references to its
+                        surrounding state (the lexical environment). In other words, a closure gives you access to an
+                        outer function's scope from an inner function. In JavaScript, closures are created every time a
+                        function is created, at function creation time.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>3. What is the Virtual DOM in React?</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>
+                        The Virtual DOM is a programming concept where a virtual representation of a UI is kept in
+                        memory and synced with the "real" DOM by a library such as ReactDOM. This process is called
+                        reconciliation. It enables the declarative API of React: You tell React what state you want the
+                        UI to be in, and it makes sure the DOM matches that state. This abstracts out the attribute
+                        manipulation, event handling, and manual DOM updating that you would otherwise have to use to
+                        build your app.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>4. Explain Event Bubbling and Capturing.</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>
+                        <strong>Event Bubbling</strong> is the process where an event propagates from the target element
+                        up to the root of the document.<br><br>
+                        <strong>Event Capturing</strong> is the opposite process, where the event goes from the root
+                        down to the target element.<br><br>
+                        In the standard DOM Event flow, capturing happens first (down to target), then the target phase,
+                        and then bubbling (up from target).
+                    </p>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>5. What is "this" keyword in JavaScript?</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>
+                        The "this" keyword refers to the object it belongs to. It has different values depending on
+                        where it is used:<br>
+                        - In a method, this refers to the owner object.<br>
+                        - Alone, this refers to the global object.<br>
+                        - In a function, this refers to the global object.<br>
+                        - In strict mode, in a function, this is undefined.<br>
+                        - In an event, this refers to the element that received the event.
+                    </p>
+                </div>
+            </div>
+            <!-- Question 6 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h3>6. What are Promises in JavaScript?</h3>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>
+                        A Promise is an object representing the eventual completion or failure of an asynchronous
+                        operation. Essentially, a promise is a returned object to which you attach callbacks, instead of
+                        passing callbacks into a function.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+
+                // Toggle current
+                item.classList.toggle('active');
+
+                // Optional: Close others
+                /*
+                document.querySelectorAll('.accordion-item').forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                */
+            });
+        });
+    </script>
+</body>
+
+</html>

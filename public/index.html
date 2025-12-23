@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Preparation Hub</title>
+    <link rel="stylesheet" href="hub.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="nav-actions">
+            <button id="logoutBtn" class="nav-link-btn btn-primary-outline">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+
+        <header>
+            <h1>Interview Preparation Hub</h1>
+            <p class="subtitle" id="welcomeMsg">Your all-in-one platform to ace your next technical interview</p>
+        </header>
+
+        <!-- Stats Section -->
+        <div class="stats-container">
+            <div class="stat-card total">
+                <h3>Questions Solved</h3>
+                <div class="stat-value" id="totalSolved">0</div>
+            </div>
+            <div class="stat-card easy">
+                <h3>Easy Solved</h3>
+                <div class="stat-value" id="easySolved">0</div>
+            </div>
+            <div class="stat-card medium">
+                <h3>Medium Solved</h3>
+                <div class="stat-value" id="mediumSolved">0</div>
+            </div>
+            <div class="stat-card hard">
+                <h3>Hard Solved</h3>
+                <div class="stat-value" id="hardSolved">0</div>
+            </div>
+        </div>
+
+        <main class="dashboard-grid">
+            <!-- Option 1: Resume Maker -->
+            <a href="resume_maker.html" class="card">
+                <i class="fas fa-file-alt card-icon"></i>
+                <h2>Resume Maker</h2>
+                <p>Create a professional resume that stands out using our advanced builder tool.</p>
+                <span class="card-btn">Build Resume</span>
+            </a>
+
+            <!-- Option 2: Interview Questions -->
+            <a href="questions.html" class="card">
+                <i class="fas fa-clipboard-question card-icon"></i>
+                <h2>Interview Questions</h2>
+                <p>Master the most frequently asked interview questions and answers.</p>
+                <span class="card-btn">Start Learning</span>
+            </a>
+
+            <!-- Option 3: Coding Practice -->
+            <a href="practice.html" class="card">
+                <i class="fas fa-code card-icon"></i>
+                <h2>Coding Practice</h2>
+                <p>Sharpen your problem-solving skills with 20 hand-picked coding challenges.</p>
+                <span class="card-btn">Start Coding</span>
+            </a>
+        </main>
+    </div>
+
+    <script src="data/questions.js"></script>
+    <script>
+        // Check for logged-in user
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        if (!user) {
+            window.location.href = 'login.html';
+        } else {
+            // Personalize welcome message
+            const welcomeMsg = document.getElementById('welcomeMsg');
+            welcomeMsg.textContent = `Welcome, ${user.name}! Your all-in-one platform to ace your next technical interview.`;
+            
+            // Calculate Stats
+            const solvedIds = JSON.parse(localStorage.getItem('solvedQuestions')) || [];
+            
+            let easyCount = 0;
+            let mediumCount = 0;
+            let hardCount = 0;
+            
+            solvedIds.forEach(id => {
+                const q = questions.find(question => question.id === id);
+                if (q) {
+                    if (q.difficulty === 'Easy') easyCount++;
+                    else if (q.difficulty === 'Medium') mediumCount++;
+                    else if (q.difficulty === 'Hard') hardCount++;
+                }
+            });
+            
+            document.getElementById('totalSolved').textContent = solvedIds.length;
+            document.getElementById('easySolved').textContent = easyCount;
+            document.getElementById('mediumSolved').textContent = mediumCount;
+            document.getElementById('hardSolved').textContent = hardCount;
+        }
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+
+</html>

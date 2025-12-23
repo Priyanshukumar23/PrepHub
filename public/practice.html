@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Practice - Interview Prep Hub</title>
+    <link rel="stylesheet" href="hub.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <a href="index.html" class="nav-back">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <header>
+            <h1>Coding Practice</h1>
+            <p class="subtitle">20 Essential coding challenges to sharpen your skills.</p>
+        </header>
+
+        <div class="content-wrapper">
+            <ul class="question-list" id="questionList">
+                <!-- Dynamically loaded -->
+            </ul>
+        </div>
+    </div>
+
+    <script src="data/questions.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check auth
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const list = document.getElementById('questionList');
+
+            questions.forEach(q => {
+                const li = document.createElement('li');
+                li.className = 'question-item';
+                li.innerHTML = `
+                    <span class="question-number">${q.id}</span>
+                    <span class="question-text">${q.title}</span>
+                    <span class="difficulty-badge ${q.difficulty.toLowerCase()}" style="margin-left: auto; margin-right: 1rem;">${q.difficulty}</span>
+                    <a href="solve.html?id=${q.id}" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.8rem;">
+                        <i class="fas fa-code"></i> Solve
+                    </a>
+                `;
+                list.appendChild(li);
+            });
+        });
+    </script>
+    </div>
+</body>
+
+</html>

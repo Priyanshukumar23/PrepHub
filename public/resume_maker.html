@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Maker - Create Professional Resumes</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-file-alt"></i>
+                <span>Resume Maker</span>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-btn"
+                    style="text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;"><i
+                        class="fas fa-arrow-left"></i> Back to Hub</a>
+                <button class="nav-btn active" data-tab="builder">Resume Builder</button>
+                <button class="nav-btn" data-tab="templates">Templates</button>
+                <button class="nav-btn" data-tab="my-resumes">My Resumes</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <!-- Resume Builder Tab -->
+        <div class="tab-content active" id="builder">
+            <div class="container">
+                <div class="builder-header">
+                    <h1>Create Your Professional Resume</h1>
+                    <p>Build a stunning resume in minutes with our easy-to-use builder</p>
+                </div>
+
+                <div class="builder-layout">
+                    <div class="form-section">
+                        <form id="resumeForm" class="resume-form">
+                            <!-- Personal Information -->
+                            <div class="form-group">
+                                <h3><i class="fas fa-user"></i> Personal Information</h3>
+
+                                <!-- Profile Image Upload -->
+                                <div class="form-field">
+                                    <label for="profileImage">Profile Picture</label>
+                                    <div class="image-upload-container">
+                                        <div class="image-preview" id="imagePreview">
+                                            <i class="fas fa-user-circle"></i>
+                                            <span>Click to upload image</span>
+                                        </div>
+                                        <input type="file" id="profileImage" name="profileImage" accept="image/*"
+                                            style="display: none;">
+                                        <button type="button" class="btn btn-secondary"
+                                            onclick="document.getElementById('profileImage').click()">
+                                            <i class="fas fa-upload"></i> Choose Image
+                                        </button>
+                                        <button type="button" class="btn btn-danger" id="removeImageBtn"
+                                            onclick="removeProfileImage()" style="display: none;">
+                                            <i class="fas fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                    <small class="form-help">Recommended: Square image, 300x300px or larger. Max size:
+                                        5MB</small>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-field">
+                                        <label for="firstName">First Name</label>
+                                        <input type="text" id="firstName" name="firstName" required>
+                                    </div>
+                                    <div class="form-field">
+                                        <label for="lastName">Last Name</label>
+                                        <input type="text" id="lastName" name="lastName" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-field">
+                                        <label for="email">Email</label>
+                                        <input type="email" id="email" name="email" required>
+                                    </div>
+                                    <div class="form-field">
+                                        <label for="phone">Phone</label>
+                                        <input type="tel" id="phone" name="phone" required>
+                                    </div>
+                                </div>
+                                <div class="form-field">
+                                    <label for="jobTitle">Job Title</label>
+                                    <input type="text" id="jobTitle" name="jobTitle"
+                                        placeholder="e.g., Software Engineer, Business Development Manager">
+                                </div>
+                                <div class="form-field">
+                                    <label for="address">Address</label>
+                                    <textarea id="address" name="address" rows="2"></textarea>
+                                </div>
+                                <div class="form-field">
+                                    <label for="linkedin">LinkedIn Profile (Optional)</label>
+                                    <input type="url" id="linkedin" name="linkedin"
+                                        placeholder="e.g., linkedin.com/in/yourprofile">
+                                </div>
+                                <div class="form-field">
+                                    <label for="github">GitHub Portfolio (Optional)</label>
+                                    <input type="url" id="github" name="github"
+                                        placeholder="e.g., github.com/yourusername">
+                                </div>
+                                <div class="form-field">
+                                    <label for="summary">Professional Summary</label>
+                                    <textarea id="summary" name="summary" rows="4"
+                                        placeholder="Write a brief summary of your professional background and career objectives..."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Education -->
+                            <div class="form-group">
+                                <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+
+                                <!-- X Class (10th) -->
+                                <div class="education-item">
+                                    <h4 style="color: #667eea; margin-bottom: 1rem;">X Class (10th Standard)</h4>
+                                    <div class="form-row">
+                                        <div class="form-field">
+                                            <label>Board</label>
+                                            <input type="text" name="xBoard"
+                                                placeholder="e.g., CBSE, ICSE, State Board">
+                                        </div>
+                                        <div class="form-field">
+                                            <label>School Name</label>
+                                            <input type="text" name="xSchool" placeholder="e.g., School Name">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-field">
+                                            <label>Year of Completion</label>
+                                            <input type="number" name="xYear" placeholder="2020">
+                                        </div>
+                                        <div class="form-field">
+                                            <label>Percentage/CGPA</label>
+                                            <input type="text" name="xPercentage" placeholder="e.g., 85% or 8.5 CGPA">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- XII Class (12th Standard) -->
+                                <div class="education-item">
+                                    <h4 style="color: #667eea; margin-bottom: 1rem;">XII Class (12th Standard)</h4>
+                                    <div class="form-row">
+                                        <div class="form-field">
+                                            <label>Board</label>
+                                            <input type="text" name="xiiBoard"
+                                                placeholder="e.g., CBSE, ICSE, State Board">
+                                        </div>
+                                        <div class="form-field">
+                                            <label>School Name</label>
+                                            <input type="text" name="xiiSchool" placeholder="e.g., School Name">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-field">
+                                            <label>Year of Completion</label>
+                                            <input type="number" name="xiiYear" placeholder="2022">
+                                        </div>
+                                        <div class="form-field">
+                                            <label>Percentage/CGPA</label>
+                                            <input type="text" name="xiiPercentage" placeholder="e.g., 85% or 8.5 CGPA">
+                                        </div>
+                                    </div>
+                                    <div class="form-field">
+                                        <label>Stream</label>
+                                        <input type="text" name="xiiStream" placeholder="e.g., Science, Commerce, Arts">
+                                    </div>
+                                </div>
+
+                                <!-- Higher Education -->
+                                <div class="education-item">
+                                    <h4 style="color: #667eea; margin-bottom: 1rem;">Higher Education</h4>
+                                    <div id="higherEducationContainer">
+                                        <div class="education-item">
+                                            <div class="form-row">
+                                                <div class="form-field">
+                                                    <label>Degree</label>
+                                                    <input type="text" name="degree[]"
+                                                        placeholder="e.g., Bachelor of Science">
+                                                </div>
+                                                <div class="form-field">
+                                                    <label>Field of Study</label>
+                                                    <input type="text" name="fieldOfStudy[]"
+                                                        placeholder="e.g., Computer Science">
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-field">
+                                                    <label>Institution</label>
+                                                    <input type="text" name="institution[]"
+                                                        placeholder="e.g., University Name">
+                                                </div>
+                                                <div class="form-field">
+                                                    <label>Graduation Year</label>
+                                                    <input type="number" name="graduationYear[]" placeholder="2023">
+                                                </div>
+                                            </div>
+                                            <div class="form-field">
+                                                <label>GPA (Optional)</label>
+                                                <input type="text" name="gpa[]" placeholder="e.g., 3.8/4.0">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-secondary" onclick="addHigherEducation()">
+                                        <i class="fas fa-plus"></i> Add Higher Education
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Experience -->
+                            <div class="form-group">
+                                <h3><i class="fas fa-briefcase"></i> Work Experience</h3>
+                                <div id="experienceContainer">
+                                    <div class="experience-item">
+                                        <div class="form-row">
+                                            <div class="form-field">
+                                                <label>Job Title</label>
+                                                <input type="text" name="jobTitle[]"
+                                                    placeholder="e.g., Software Engineer">
+                                            </div>
+                                            <div class="form-field">
+                                                <label>Company</label>
+                                                <input type="text" name="company[]" placeholder="e.g., Tech Company">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-field">
+                                                <label>Start Date</label>
+                                                <input type="month" name="startDate[]">
+                                            </div>
+                                            <div class="form-field">
+                                                <label>End Date</label>
+                                                <input type="month" name="endDate[]">
+                                            </div>
+                                        </div>
+                                        <div class="form-field">
+                                            <label>Description</label>
+                                            <textarea name="jobDescription[]" rows="3"
+                                                placeholder="Describe your responsibilities and achievements..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-secondary" onclick="addExperience()">
+                                    <i class="fas fa-plus"></i> Add Experience
+                                </button>
+                            </div>
+
+                            <!-- Skills -->
+                            <div class="form-group">
+                                <h3><i class="fas fa-tools"></i> Skills</h3>
+                                <div class="form-field">
+                                    <label for="skills">Skills (comma-separated)</label>
+                                    <textarea id="skills" name="skills" rows="3"
+                                        placeholder="e.g., JavaScript, React, Node.js, Python, SQL"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Extra Curricular Activities -->
+                            <div class="form-group">
+                                <h3><i class="fas fa-star"></i> Extra Curricular Activities</h3>
+                                <div id="activitiesContainer">
+                                    <div class="activity-item">
+                                        <div class="form-row">
+                                            <div class="form-field">
+                                                <label>Activity Title</label>
+                                                <input type="text" name="activityTitle[]"
+                                                    placeholder="e.g., Student Council Member">
+                                            </div>
+                                            <div class="form-field">
+                                                <label>Organization</label>
+                                                <input type="text" name="activityOrg[]"
+                                                    placeholder="e.g., College Name">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-field">
+                                                <label>Duration</label>
+                                                <input type="text" name="activityDuration[]"
+                                                    placeholder="e.g., 2022-2023">
+                                            </div>
+                                            <div class="form-field">
+                                                <label>Role</label>
+                                                <input type="text" name="activityRole[]"
+                                                    placeholder="e.g., President, Member">
+                                            </div>
+                                        </div>
+                                        <div class="form-field">
+                                            <label>Description</label>
+                                            <textarea name="activityDescription[]" rows="2"
+                                                placeholder="Describe your role and achievements..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-secondary" onclick="addActivity()">
+                                    <i class="fas fa-plus"></i> Add Activity
+                                </button>
+                            </div>
+
+                            <!-- Achievements -->
+                            <div class="form-group">
+                                <h3><i class="fas fa-trophy"></i> Achievements & Awards</h3>
+                                <div id="achievementsContainer">
+                                    <div class="achievement-item">
+                                        <div class="form-row">
+                                            <div class="form-field">
+                                                <label>Award/Achievement</label>
+                                                <input type="text" name="achievementTitle[]"
+                                                    placeholder="e.g., Best Student Award">
+                                            </div>
+                                            <div class="form-field">
+                                                <label>Year</label>
+                                                <input type="number" name="achievementYear[]" placeholder="2023">
+                                            </div>
+                                        </div>
+                                        <div class="form-field">
+                                            <label>Description</label>
+                                            <textarea name="achievementDescription[]" rows="2"
+                                                placeholder="Describe the achievement and criteria..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-secondary" onclick="addAchievement()">
+                                    <i class="fas fa-plus"></i> Add Achievement
+                                </button>
+                            </div>
+
+                            <!-- Projects -->
+                            <div class="form-group">
+                                <h3><i class="fas fa-project-diagram"></i> Projects</h3>
+                                <div id="projectsContainer">
+                                    <div class="project-item">
+                                        <div class="form-row">
+                                            <div class="form-field">
+                                                <label>Project Name</label>
+                                                <input type="text" name="projectName[]"
+                                                    placeholder="e.g., E-commerce Website">
+                                            </div>
+                                            <div class="form-field">
+                                                <label>Technologies</label>
+                                                <input type="text" name="projectTech[]"
+                                                    placeholder="e.g., React, Node.js, MongoDB">
+                                            </div>
+                                        </div>
+                                        <div class="form-field">
+                                            <label>Description</label>
+                                            <textarea name="projectDescription[]" rows="3"
+                                                placeholder="Describe your project..."></textarea>
+                                        </div>
+                                        <div class="form-field">
+                                            <label>Project URL (Optional)</label>
+                                            <input type="url" name="projectUrl[]" placeholder="https://project-url.com">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-secondary" onclick="addProject()">
+                                    <i class="fas fa-plus"></i> Add Project
+                                </button>
+                            </div>
+
+                            <!-- Certifications -->
+                            <div class="form-group">
+                                <h3><i class="fas fa-certificate"></i> Certifications</h3>
+                                <div id="certificationsContainer">
+                                    <div class="certification-item">
+                                        <div class="form-row">
+                                            <div class="form-field">
+                                                <label>Certification Name</label>
+                                                <input type="text" name="certName[]"
+                                                    placeholder="e.g., AWS Certified Developer">
+                                            </div>
+                                            <div class="form-field">
+                                                <label>Issuing Organization</label>
+                                                <input type="text" name="certOrg[]"
+                                                    placeholder="e.g., Amazon Web Services">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-field">
+                                                <label>Issue Date</label>
+                                                <input type="month" name="certIssueDate[]">
+                                            </div>
+                                            <div class="form-field">
+                                                <label>Expiry Date (Optional)</label>
+                                                <input type="month" name="certExpiryDate[]">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-secondary" onclick="addCertification()">
+                                    <i class="fas fa-plus"></i> Add Certification
+                                </button>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Save Resume
+                                </button>
+                                <button type="button" class="btn btn-success" onclick="generateResume()">
+                                    <i class="fas fa-download"></i> Generate & Download
+                                </button>
+                                <button type="button" class="btn btn-secondary" onclick="testImageDownload()">
+                                    <i class="fas fa-eye"></i> Test Image
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="preview-section">
+                        <div class="preview-header">
+                            <h3>Live Preview</h3>
+                            <div class="template-selector">
+                                <label for="templateSelect">Template:</label>
+                                <select id="templateSelect" onchange="changeTemplate()">
+                                    <option value="modern">Modern</option>
+                                    <option value="classic">Classic</option>
+                                    <option value="creative">Creative</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="resume-preview" id="resumePreview">
+                            <!-- Resume preview will be generated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Templates Tab -->
+        <div class="tab-content" id="templates">
+            <div class="container">
+                <h2>Resume Templates</h2>
+                <div class="templates-grid">
+                    <div class="template-card" data-template="modern">
+                        <div class="template-preview modern-template">
+                            <h3>John Doe</h3>
+                            <p>Software Engineer</p>
+                        </div>
+                        <h4>Modern</h4>
+                        <p>Clean and professional design</p>
+                        <button class="btn btn-primary" onclick="selectTemplate('modern')">Use Template</button>
+                    </div>
+                    <div class="template-card" data-template="classic">
+                        <div class="template-preview classic-template">
+                            <h3>John Doe</h3>
+                            <p>Software Engineer</p>
+                        </div>
+                        <h4>Classic</h4>
+                        <p>Traditional and formal layout</p>
+                        <button class="btn btn-primary" onclick="selectTemplate('classic')">Use Template</button>
+                    </div>
+                    <div class="template-card" data-template="creative">
+                        <div class="template-preview creative-template">
+                            <h3>John Doe</h3>
+                            <p>Software Engineer</p>
+                        </div>
+                        <h4>Creative</h4>
+                        <p>Modern and innovative design</p>
+                        <button class="btn btn-primary" onclick="selectTemplate('creative')">Use Template</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Resumes Tab -->
+        <div class="tab-content" id="my-resumes">
+            <div class="container">
+                <div class="resumes-header">
+                    <h2>My Resumes</h2>
+                    <button class="btn btn-primary" onclick="showUploadForm()">
+                        <i class="fas fa-upload"></i> Upload Resume
+                    </button>
+                </div>
+
+                <!-- Upload Form -->
+                <div id="uploadForm" class="upload-form" style="display: none;">
+                    <h3>Upload Existing Resume</h3>
+                    <form id="fileUploadForm" enctype="multipart/form-data">
+                        <div class="form-field">
+                            <label for="resumeFile">Select Resume File (PDF, DOC, DOCX)</label>
+                            <input type="file" id="resumeFile" name="resume" accept=".pdf,.doc,.docx" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                            <button type="button" class="btn btn-secondary" onclick="hideUploadForm()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="resumesList" class="resumes-list">
+                    <!-- Resumes will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for editing resumes -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Resume</h2>
+            <div id="editFormContainer">
+                <!-- Edit form will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
