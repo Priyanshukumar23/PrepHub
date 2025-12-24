@@ -373,10 +373,10 @@ function renderTestResults(results) {
             const urlParams = new URLSearchParams(window.location.search);
             const questionId = parseInt(urlParams.get('id')); // Already parsed at top, but safe to redo
 
-            let solved = JSON.parse(localStorage.getItem('solvedQuestions')) || [];
+            let solved = JSON.parse(localStorage.getItem(`solvedQuestions_${user.email}`)) || [];
             if (!solved.includes(questionId)) {
                 solved.push(questionId);
-                localStorage.setItem('solvedQuestions', JSON.stringify(solved));
+                localStorage.setItem(`solvedQuestions_${user.email}`, JSON.stringify(solved));
             }
         }
     } else {
