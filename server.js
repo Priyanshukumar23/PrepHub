@@ -4,9 +4,32 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
+const mongoose = require('mongoose');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Connect to MongoDB
+mongoose.connect('mongodb://127.0.0.1:27017/prephub', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.error('MongoDB connection error:', err));
+
+// MongoDB Schemas
+const userSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true } // In production, hash this password!
+});
+const User = mongoose.model('User', userSchema);
+
+const historySchema = new mongoose.Schema({
+    email: { type: String, required: true },
+    action: { type: String, required: true }, // 'login' or 'logout'
+    timestamp: { type: Date, default: Date.now }
+});
+const History = mongoose.model('History', historySchema);
 
 // Middleware
 app.use(cors());
@@ -30,11 +53,11 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ 
+const upload = multer({
     storage: storage,
     fileFilter: function (req, file, cb) {
-        if (file.mimetype === 'application/pdf' || 
-            file.mimetype === 'application/msword' || 
+        if (file.mimetype === 'application/pdf' ||
+            file.mimetype === 'application/msword' ||
             file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
             cb(null, true);
         } else {
@@ -47,51 +70,78 @@ const upload = multer({
 let resumes = [];
 let resumeCounter = 1;
 
-// Store users in memory
-let users = [];
-let userCounter = 1;
-
-// Note: In a production environment, you would want to:
-// 1. Store images in a cloud storage service (AWS S3, Google Cloud Storage, etc.)
-// 2. Use a proper database (MongoDB, PostgreSQL, etc.)
-// 3. Implement image compression and optimization
-// 4. Add proper image validation and security measures
-
 // Routes
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Authentication Routes
-app.post('/api/register', (req, res) => {
+app.post('/api/register', async (req, res) => {
     const { name, email, password } = req.body;
-    
-    // Check if user already exists
-    if (users.find(u => u.email === email)) {
-        return res.status(400).json({ error: 'User already exists' });
+
+    try {
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ error: 'User already exists' });
+        }
+
+        const newUser = new User({
+            name,
+            email,
+            password, // In production, hash this password!
+        });
+
+        await newUser.save();
+        res.status(201).json({ success: true, user: { id: newUser._id, name: newUser.name, email: newUser.email } });
+    } catch (error) {
+        console.error('Registration error:', error);
+        res.status(500).json({ error: 'Registration failed' });
     }
-    
-    const newUser = {
-        id: userCounter++,
-        name,
-        email,
-        password, // In production, hash this password!
-    };
-    
-    users.push(newUser);
-    res.status(201).json({ success: true, user: { id: newUser.id, name: newUser.name, email: newUser.email } });
 });
 
-app.post('/api/login', (req, res) => {
+app.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
-    
-    const user = users.find(u => u.email === email && u.password === password);
-    
-    if (!user) {
-        return res.status(401).json({ error: 'Invalid email or password' });
+
+    try {
+        const user = await User.findOne({ email, password });
+
+        if (!user) {
+            return res.status(401).json({ error: 'Invalid email or password' });
+        }
+
+        // Log login history
+        await History.create({
+            email: user.email,
+            action: 'login'
+        });
+
+        res.json({ success: true, user: { id: user._id, name: user.name, email: user.email } });
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({ error: 'Login failed' });
     }
-    
-    res.json({ success: true, user: { id: user.id, name: user.name, email: user.email } });
+});
+
+app.post('/api/logout', async (req, res) => {
+    const { email } = req.body;
+
+    if (!email) {
+        return res.status(400).json({ error: 'Email is required for logging out' });
+    }
+
+    try {
+        // Log logout history
+        await History.create({
+            email,
+            action: 'logout'
+        });
+
+        res.json({ success: true });
+    } catch (error) {
+        console.error('Logout error:', error);
+        res.status(500).json({ error: 'Logout logging failed' });
+    }
 });
 
 // Get all resumes
@@ -126,13 +176,13 @@ app.put('/api/resumes/:id', (req, res) => {
     if (resumeIndex === -1) {
         return res.status(404).json({ error: 'Resume not found' });
     }
-    
+
     resumes[resumeIndex] = {
         ...resumes[resumeIndex],
         ...req.body,
         updatedAt: new Date().toISOString()
     };
-    
+
     res.json(resumes[resumeIndex]);
 });
 
@@ -142,7 +192,7 @@ app.delete('/api/resumes/:id', (req, res) => {
     if (resumeIndex === -1) {
         return res.status(404).json({ error: 'Resume not found' });
     }
-    
+
     resumes.splice(resumeIndex, 1);
     res.status(204).send();
 });
@@ -152,7 +202,7 @@ app.post('/api/upload', upload.single('resume'), (req, res) => {
     if (!req.file) {
         return res.status(400).json({ error: 'No file uploaded' });
     }
-    
+
     const uploadedResume = {
         id: resumeCounter++,
         filename: req.file.filename,
@@ -160,7 +210,7 @@ app.post('/api/upload', upload.single('resume'), (req, res) => {
         filePath: req.file.path,
         uploadedAt: new Date().toISOString()
     };
-    
+
     resumes.push(uploadedResume);
     res.json(uploadedResume);
 });
@@ -171,19 +221,19 @@ app.get('/api/download/:id', (req, res) => {
     if (!resume || !resume.filePath) {
         return res.status(404).json({ error: 'Resume not found' });
     }
-    
+
     const filePath = path.join(__dirname, resume.filePath);
     if (!fs.existsSync(filePath)) {
         return res.status(404).json({ error: 'File not found' });
     }
-    
+
     res.download(filePath, resume.originalName);
 });
 
 // Generate PDF resume
 app.post('/api/generate-pdf', (req, res) => {
     const { resumeData } = req.body;
-    
+
     // In a real application, you would use a library like puppeteer or jsPDF
     // For now, we'll return the data as JSON
     const generatedResume = {
@@ -192,7 +242,7 @@ app.post('/api/generate-pdf', (req, res) => {
         type: 'generated',
         createdAt: new Date().toISOString()
     };
-    
+
     resumes.push(generatedResume);
     res.json(generatedResume);
 });
