@@ -22,5 +22,10 @@ Thumbs.db
 dist/
 build/
 
-# Uploads (optional – uncomment if you don't want uploads on GitHub)
-# uploads/
+# Uploads (Do not push user CVs to GitHub)
+uploads/
+
+# Client specific
+client/node_modules/
+client/.env
+client/dist/

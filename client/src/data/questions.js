@@ -1,4 +1,4 @@
-const questions = [
+export const questions = [
     {
         id: 1,
         title: "Reverse a String",

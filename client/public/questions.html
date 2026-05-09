@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mock Interview - Prep Hub</title>
+    <link rel="stylesheet" href="hub.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        .interview-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .setup-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .setup-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .setup-group select {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .btn-start {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-start:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .active-interview, .result-screen {
+            display: none;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .question-count {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .question-difficulty {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            text-transform: capitalize;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .answer-area {
+            width: 100%;
+            min-height: 150px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            padding: 1rem;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            resize: vertical;
+            margin-bottom: 1rem;
+        }
+
+        .feedback-box {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--primary);
+        }
+
+        .feedback-box.correct {
+            border-left-color: #22c55e;
+        }
+
+        .feedback-box.incorrect {
+            border-left-color: #ef4444;
+        }
+        
+        .score-display {
+            text-align: center;
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="/" class="nav-back">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <header>
+            <h1>AI Mock Interview</h1>
+            <p class="subtitle">Practice dynamically generated interview questions evaluated by AI.</p>
+        </header>
+
+        <div class="interview-container">
+            <!-- SETUP SCREEN -->
+            <div id="setupScreen" class="setup-screen">
+                <div class="setup-group">
+                    <label>Select Category</label>
+                    <select id="categorySelect">
+                        <option value="Full Stack Development">Full Stack Development</option>
+                        <option value="DevOps">DevOps</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="AI / ML">AI / ML</option>
+                        <option value="Frontend Development">Frontend Development</option>
+                        <option value="Backend Development">Backend Development</option>
+                    </select>
+                </div>
+                <div class="setup-group">
+                    <label>Select Initial Difficulty</label>
+                    <select id="levelSelect">
+                        <option value="Basic">Basic</option>
+                        <option value="Advance">Advance</option>
+                        <option value="Hard">Hard</option>
+                        <option value="Frequently Asked">Frequently Asked</option>
+                    </select>
+                </div>
+                <button class="btn-start" onclick="startInterview()">Start Interview</button>
+            </div>
+
+            <!-- ACTIVE INTERVIEW SCREEN -->
+            <div id="activeInterview" class="active-interview">
+                <div class="question-header">
+                    <div class="question-count">Question <span id="qCount">1</span> / 10</div>
+                    <div class="question-difficulty" id="qDifficulty">Basic</div>
+                </div>
+                
+                <div id="loadingQuestion" style="text-align: center; padding: 2rem; color: var(--primary); display: none;">
+                    <i class="fas fa-spinner fa-spin fa-2x"></i>
+                    <p style="margin-top: 1rem;">Generating question...</p>
+                </div>
+
+                <div id="questionArea">
+                    <div class="question-text" id="questionText"></div>
+                    <textarea id="answerInput" class="answer-area" placeholder="Type your answer here..."></textarea>
+                    
+                    <button id="submitBtn" class="btn-start" onclick="submitAnswer()">Submit Answer</button>
+
+                    <div id="evaluatingAnswer" style="text-align: center; padding: 1rem; color: var(--primary); display: none;">
+                        <i class="fas fa-spinner fa-spin"></i> Evaluating your answer...
+                    </div>
+
+                    <div id="feedbackBox" class="feedback-box">
+                        <h3 id="feedbackTitle" style="margin-bottom: 1rem; display: flex; align-items: center;"></h3>
+                        <p id="feedbackText" style="margin-bottom: 1rem; line-height: 1.5;"></p>
+                        <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px;">
+                            <strong style="color: var(--primary);">Ideal Answer:</strong>
+                            <p id="idealAnswerText" style="margin-top: 0.5rem; line-height: 1.5; color: var(--text-dim);"></p>
+                        </div>
+                        <button id="nextBtn" class="btn-start" style="margin-top: 1.5rem;" onclick="nextQuestion()">Next Question</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESULT SCREEN -->
+            <div id="resultScreen" class="result-screen" style="text-align: center;">
+                <h2>Interview Complete!</h2>
+                <div class="score-display">
+                    <span id="finalScore">0</span><span style="font-size: 2rem; color: var(--text-dim);"> / 10</span>
+                </div>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem; color: var(--text-light);">Here is how you performed overall.</p>
+                <button class="btn-start" style="width: auto;" onclick="location.reload()">Start New Interview</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let currentCategory = '';
+        let currentLevel = '';
+        let questionsAnswered = 0;
+        let correctAnswers = 0;
+        let previousQuestions = [];
+        let currentQuestion = '';
+
+        const difficultyProgression = {
+            'Basic': 'Advance',
+            'Advance': 'Hard',
+            'Hard': 'Hard', // Caps at Hard
+            'Frequently Asked': 'Hard'
+        };
+
+        async function startInterview() {
+            currentCategory = document.getElementById('categorySelect').value;
+            currentLevel = document.getElementById('levelSelect').value;
+            
+            document.getElementById('setupScreen').style.display = 'none';
+            document.getElementById('activeInterview').style.display = 'block';
+            
+            await fetchNextQuestion();
+        }
+
+        async function fetchNextQuestion() {
+            document.getElementById('questionArea').style.display = 'none';
+            document.getElementById('loadingQuestion').style.display = 'block';
+            document.getElementById('qCount').textContent = questionsAnswered + 1;
+            document.getElementById('qDifficulty').textContent = currentLevel;
+            
+            // Clear previous answer and feedback
+            document.getElementById('answerInput').value = '';
+            document.getElementById('feedbackBox').style.display = 'none';
+            document.getElementById('submitBtn').style.display = 'block';
+
+            try {
+                const response = await fetch('/api/generate-question', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        category: currentCategory,
+                        level: currentLevel,
+                        previousQuestions: previousQuestions
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.error) throw new Error(data.error);
+
+                currentQuestion = data.question;
+                document.getElementById('questionText').textContent = currentQuestion;
+                
+                document.getElementById('loadingQuestion').style.display = 'none';
+                document.getElementById('questionArea').style.display = 'block';
+            } catch (error) {
+                alert("Error: " + error.message);
+                console.error(error);
+                document.getElementById('loadingQuestion').style.display = 'none';
+                document.getElementById('setupScreen').style.display = 'block';
+                document.getElementById('activeInterview').style.display = 'none';
+            }
+        }
+
+        async function submitAnswer() {
+            const answer = document.getElementById('answerInput').value.trim();
+            if (!answer) {
+                alert("Please type an answer first.");
+                return;
+            }
+
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('evaluatingAnswer').style.display = 'block';
+            document.getElementById('answerInput').disabled = true;
+
+            try {
+                const response = await fetch('/api/evaluate-answer', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        category: currentCategory,
+                        question: currentQuestion,
+                        answer: answer
+                    })
+                });
+
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+
+                document.getElementById('evaluatingAnswer').style.display = 'none';
+                
+                const feedbackBox = document.getElementById('feedbackBox');
+                const feedbackTitle = document.getElementById('feedbackTitle');
+                
+                feedbackBox.style.display = 'block';
+                feedbackBox.className = 'feedback-box ' + (data.isCorrect ? 'correct' : 'incorrect');
+                
+                if (data.isCorrect) {
+                    correctAnswers++;
+                    feedbackTitle.innerHTML = '<i class="fas fa-check-circle" style="color: #22c55e; margin-right: 0.5rem;"></i> Good Answer!';
+                    feedbackTitle.style.color = '#22c55e';
+                    
+                    // Increase difficulty if correct
+                    if (difficultyProgression[currentLevel]) {
+                        currentLevel = difficultyProgression[currentLevel];
+                    }
+                } else {
+                    feedbackTitle.innerHTML = '<i class="fas fa-times-circle" style="color: #ef4444; margin-right: 0.5rem;"></i> Needs Improvement';
+                    feedbackTitle.style.color = '#ef4444';
+                }
+
+                document.getElementById('feedbackText').textContent = data.feedback;
+                document.getElementById('idealAnswerText').textContent = data.idealAnswer;
+                
+                previousQuestions.push(currentQuestion);
+                questionsAnswered++;
+
+                const nextBtn = document.getElementById('nextBtn');
+                if (questionsAnswered >= 10) {
+                    nextBtn.textContent = 'See Final Results';
+                }
+
+            } catch (error) {
+                alert("Error: " + error.message);
+                console.error(error);
+                document.getElementById('submitBtn').style.display = 'block';
+                document.getElementById('evaluatingAnswer').style.display = 'none';
+                document.getElementById('answerInput').disabled = false;
+            }
+        }
+
+        async function nextQuestion() {
+            document.getElementById('answerInput').disabled = false;
+            
+            if (questionsAnswered >= 10) {
+                // Show results
+                document.getElementById('activeInterview').style.display = 'none';
+                document.getElementById('resultScreen').style.display = 'block';
+                document.getElementById('finalScore').textContent = correctAnswers;
+            } else {
+                await fetchNextQuestion();
+            }
+        }
+    </script>
+</body>
+
+</html>
