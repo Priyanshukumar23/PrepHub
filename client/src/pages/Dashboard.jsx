@@ -8,6 +8,13 @@ const Dashboard = () => {
   const [stats, setStats] = useState({ easy: 0, medium: 0, hard: 0, totalSolved: 0, totalEasy: 0, totalMedium: 0, totalHard: 0, totalQuestions: 0 });
   const navigate = useNavigate();
 
+  const dailyChallenge = questions.find(q => q.id === 21) || questions[0];
+  const recommendations = [
+    questions.find(q => q.id === 13) || questions[1],
+    questions.find(q => q.id === 45) || questions[2],
+    questions.find(q => q.id === 22) || questions[3]
+  ];
+
   // Profile Dropdown and Edit Modal State
   const [showDropdown, setShowDropdown] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -130,6 +137,7 @@ const Dashboard = () => {
           <Link to="/network" className="nav-item"><i className="fas fa-rss"></i> ConnectHub</Link>
           <Link to="/practice" className="nav-item"><i className="fas fa-code"></i> Problem Solving</Link>
           <a href="/questions.html" className="nav-item"><i className="fas fa-robot"></i> AI Mock Interview</a>
+          <Link to="/about" className="nav-item"><i className="fas fa-info-circle"></i> About</Link>
         </div>
         <div className="nav-profile">
           <div className="profile-menu" style={{ position: 'relative' }}>
@@ -236,13 +244,13 @@ const Dashboard = () => {
             <section className="content-card challenge-card">
               <div className="card-header">
                 <h2><i className="fas fa-star text-warning"></i> Today's Challenge</h2>
-                <span className="tag medium-tag">Medium</span>
+                <span className={`tag ${dailyChallenge.difficulty.toLowerCase()}-tag`}>{dailyChallenge.difficulty}</span>
               </div>
               <div className="card-body">
-                <h3>Reverse Linked List II</h3>
-                <p>Given the head of a singly linked list and two integers left and right where left &lt;= right, reverse the nodes of the list from position left to position right, and return the reversed list.</p>
+                <h3>{dailyChallenge.title}</h3>
+                <p>{dailyChallenge.description}</p>
                 <div className="challenge-actions">
-                  <Link to="/solve/4" className="btn-outline">Solve Now</Link>
+                  <Link to={`/solve/${dailyChallenge.id}`} className="btn-outline">Solve Now</Link>
                   <span className="success-rate"><i className="fas fa-chart-line"></i> 45% Success Rate</span>
                 </div>
               </div>
@@ -254,27 +262,15 @@ const Dashboard = () => {
                 <Link to="/practice" className="view-all">View All</Link>
               </div>
               <div className="recommendation-list">
-                <div className="rec-item">
-                  <div className="rec-info">
-                    <h4>Two Sum</h4>
-                    <span>Array, Hash Table</span>
+                {recommendations.map(q => (
+                  <div className="rec-item" key={q.id}>
+                    <div className="rec-info">
+                      <h4>{q.title}</h4>
+                      <Link to={`/solve/${q.id}`} style={{fontSize: '0.8rem', color: '#4f46e5', textDecoration: 'none'}}>Solve Now <i className="fas fa-arrow-right"></i></Link>
+                    </div>
+                    <span className={`tag ${q.difficulty.toLowerCase()}-tag`}>{q.difficulty}</span>
                   </div>
-                  <span className="tag easy-tag">Easy</span>
-                </div>
-                <div className="rec-item">
-                  <div className="rec-info">
-                    <h4>Longest Substring Without Repeating Characters</h4>
-                    <span>String, Sliding Window</span>
-                  </div>
-                  <span className="tag medium-tag">Medium</span>
-                </div>
-                <div className="rec-item">
-                  <div className="rec-info">
-                    <h4>Merge k Sorted Lists</h4>
-                    <span>Linked List, Heap</span>
-                  </div>
-                  <span className="tag hard-tag">Hard</span>
-                </div>
+                ))}
               </div>
             </section>
           </div>

@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  db:
+    image: mongo:latest
+    container_name: prephub-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - prephub-network
+
+  backend:
+    build: ./server
+    container_name: prephub-backend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - MONGO_URI=mongodb://db:27017/prephub
+      # Add other environment variables here, e.g., GEMINI_API_KEY
+    depends_on:
+      - db
+    networks:
+      - prephub-network
+
+  frontend:
+    build: ./client
+    container_name: prephub-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - prephub-network
+
+  demo-maven-service:
+    build: ./demo-maven-service
+    container_name: prephub-maven-demo
+    restart: always
+    networks:
+      - prephub-network
+
+volumes:
+  mongo-data:
+
+networks:
+  prephub-network:
+    driver: bridge

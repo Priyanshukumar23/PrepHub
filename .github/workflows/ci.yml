@@ -1,0 +1,48 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js for Backend & Frontend
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install Backend Dependencies
+      working-directory: ./server
+      run: npm install
+
+    - name: Install Frontend Dependencies
+      working-directory: ./client
+      run: npm install
+
+    - name: Build Frontend
+      working-directory: ./client
+      run: npm run build
+
+    - name: Set up JDK 11 for Maven Module
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+
+    - name: Build Maven Module
+      working-directory: ./demo-maven-service
+      run: mvn -B package --file pom.xml
+
+    - name: Build Docker Images (Simulation)
+      run: docker-compose build
+
+    - name: Deployment Simulation
+      run: echo "Deployment step successfully completed!"

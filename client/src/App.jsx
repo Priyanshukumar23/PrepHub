@@ -7,6 +7,7 @@ import Practice from './pages/Practice';
 import Solve from './pages/Solve';
 import Network from './pages/Network';
 import AdminDashboard from './pages/AdminDashboard';
+import About from './pages/About';
 
 // A simple layout for pages that need navbar, or we can include it in the Dashboard
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/solve/:id" element={<Solve />} />
         <Route path="/network" element={<Network />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </div>
   );

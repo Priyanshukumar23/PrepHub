@@ -369,6 +369,7 @@ const Network = () => {
           <Link to="/network" className="nav-item active"><i className="fas fa-users"></i> Network</Link>
           <a href="/questions.html" className="nav-item"><i className="fas fa-robot"></i> AI Mock Interview</a>
           <div className="nav-item" onClick={() => setShowChatModal(true)} style={{ cursor: 'pointer' }}><i className="fas fa-comment-dots"></i> Live Chat</div>
+          <Link to="/about" className="nav-item"><i className="fas fa-info-circle"></i> About</Link>
         </div>
         <div className="nav-profile">
           <div className="profile-menu" style={{ position: 'relative' }}>

@@ -29,8 +29,9 @@ const PORT = process.env.PORT || 3000;
 })();
 
 // Connect to MongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/prephub')
-    .then(() => console.log('Connected to MongoDB'))
+const mongoURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/prephub';
+mongoose.connect(mongoURI)
+    .then(() => console.log('Connected to MongoDB at', mongoURI))
     .catch(err => console.error('MongoDB connection error:', err));
 
 // MongoDB Schemas
@@ -643,6 +644,31 @@ app.post('/api/chat/message', (req, res) => {
     chatMessages.push(msg);
     // Keep only last 100 messages in memory
     if (chatMessages.length > 100) chatMessages.shift();
+    res.status(201).json(msg);
+});
+
+let directMessages = []; // Store for admin-user direct messages
+
+app.get('/api/messages/:user1/:user2', (req, res) => {
+    const { user1, user2 } = req.params;
+    const msgs = directMessages.filter(m => 
+        (m.sender === user1 && m.recipient === user2) || 
+        (m.sender === user2 && m.recipient === user1)
+    );
+    res.json(msgs.slice(-50));
+});
+
+app.post('/api/messages', (req, res) => {
+    const { sender, recipient, text } = req.body;
+    const msg = {
+        id: Date.now(),
+        sender,
+        recipient,
+        text,
+        timestamp: new Date()
+    };
+    directMessages.push(msg);
+    if (directMessages.length > 1000) directMessages.shift();
     res.status(201).json(msg);
 });
 
