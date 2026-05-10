@@ -42,7 +42,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Build Docker Images (Simulation)
-      run: docker-compose build
+      run: docker compose build
 
     - name: Deployment Simulation
       run: echo "Deployment step successfully completed!"

@@ -45,14 +45,14 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 echo 'Building Docker Images...'
-                sh 'docker-compose build'
+                sh 'docker compose build'
             }
         }
 
         stage('Deploy Containers') {
             steps {
                 echo 'Deploying application using Docker Compose...'
-                sh 'docker-compose up -d'
+                sh 'docker compose up -d'
             }
         }
     }
