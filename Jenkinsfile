@@ -17,8 +17,7 @@ pipeline {
             steps {
                 echo 'Installing Backend Dependencies...'
                 dir('server') {
-                    sh 'npm install'
-                    // Add test commands here if available (e.g., npm test)
+                    bat 'npm install'
                 }
             }
         }
@@ -27,8 +26,8 @@ pipeline {
             steps {
                 echo 'Installing Frontend Dependencies & Building...'
                 dir('client') {
-                    sh 'npm install'
-                    sh 'npm run build'
+                    bat 'npm install'
+                    bat 'npm run build'
                 }
             }
         }
@@ -37,7 +36,7 @@ pipeline {
             steps {
                 echo 'Building Maven Demo Service...'
                 dir('demo-maven-service') {
-                    sh 'mvn clean package'
+                    bat 'mvn clean package'
                 }
             }
         }
@@ -45,14 +44,14 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 echo 'Building Docker Images...'
-                sh 'docker compose build'
+                bat 'docker compose build'
             }
         }
 
         stage('Deploy Containers') {
             steps {
                 echo 'Deploying application using Docker Compose...'
-                sh 'docker compose up -d'
+                bat 'docker compose up -d'
             }
         }
     }
