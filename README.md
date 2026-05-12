@@ -1,109 +1,80 @@
-# PREPHUB 🚀
+🚀 PREPHUB
+An AI-Powered Career Preparation & Professional Networking Ecosystem
 
-PREPHUB is an AI-powered preparation platform built using the MERN Stack and Gemini API.  
-It helps students and job seekers prepare for placements, coding interviews, resume building, networking, and job applications — all in one platform.
+PREPHUB is a comprehensive platform built using the MERN Stack and the Gemini API. Designed for students, job seekers, and hiring teams, it seamlessly combines AI-driven interview preparation, coding practice, ATS-optimized resume building, and professional networking. The platform incorporates modern DevOps practices, including Docker containerization and Jenkins CI/CD pipelines.
 
----
+🌟 Key Features
+🤖 AI Assessment & Interview Ecosystem
+Dynamic Mock Interviews: Real-time, stream-specific questions generated dynamically by Gemini AI based on user input.
 
-# 🌟 Features
+Instant AI Feedback: Get deep analysis on logical correctness, code optimization, and communication skills.
 
-## 🤖 AI Interview System
-- Users can attend AI-based mock interviews
-- Gemini AI asks interview questions dynamically
-- Users type answers in real time
-- AI analyzes answers and provides:
-  - Feedback
-  - Optimized answers
-  - Improvement suggestions
-  - Communication tips
+AI Coding Practice Panel: Practice Java and C++ directly in the browser. Gemini API evaluates logic correctness, time complexity, and suggests optimized solutions.
 
----
+🌐 ConnectHub (Professional Networking)
+Role-Based Access: Dedicated interfaces for Developers and Hiring Teams.
 
-## 💻 AI Coding Practice Panel
-- Online coding editor for:
-  - Java
-  - C++
-- Users can solve coding questions directly in the browser
-- Gemini API evaluates:
-  - Logic correctness
-  - Time complexity
-  - Code optimization
-  - Best approach suggestions
-- Provides optimized solutions if the submitted code is inefficient
+Real-Time Interaction: Features anonymous global chat and direct messaging powered by Socket.io.
 
----
+Community Engagement: Share posts, upload media, interact with community content, and build professional profiles.
 
-## 📄 Resume Builder
-- Create professional resumes
-- Multiple resume templates
-- Real-time preview
-- Download resumes easily
-- Edit and manage resumes anytime
+📄 ATS-Optimized Resume Builder
+Dynamic Generation: Create highly optimized, company-ready resumes with real-time previews.
 
----
+Improved Success Rates: Formatting designed specifically to pass Applicant Tracking Systems (ATS).
 
-## 🌐 ConnectHub (Professional Networking)
-- Users can:
-  - Share posts
-  - Connect with others
-  - Apply for jobs
-  - Build professional profiles
-- Includes:
-  - Real-time chatting
-  - Networking system
-  - Community interaction
+🧑‍💼 Job Portal & Admin Panel
+Hiring Teams: Create job postings, manage application pipelines, and accept/reject candidates.
 
----
+Candidates: Browse job boards, track application statuses, and apply seamlessly with their PREPHUB profiles.
 
-## 🧑‍💼 Job Portal & Admin Panel
-### Admin Features
-- Create job postings
-- Manage applications
-- Accept or reject candidates
-- Monitor platform activity
+🛠️ Tech Stack & Architecture
+Frontend
 
-### User Features
-- Apply for jobs
-- Track applications
-- Upload resumes
-- Get placement opportunities
+React.js (Vite)
 
----
+Tailwind CSS
 
-# 🛠️ Tech Stack
+Backend & Integration
 
-## Frontend
-- React.js
-- Vite
-- Tailwind CSS
+Node.js & Express.js (Main API & WebSocket Server)
 
-## Backend
-- Node.js
-- Express.js
+MongoDB (Database)
 
-## Database
-- MongoDB
+AI & Tools
 
-## AI Integration
-- Gemini API
+Google Gemini API (LLM for evaluation & feedback)
 
-## Other Tools
-- JWT Authentication
-- Socket.io (Real-time Chat)
-- REST APIs
+Socket.io (Real-time communication)
 
----
+JWT (Authentication)
 
-# 📂 Project Structure
+DevOps & Infrastructure
 
-```bash
+Docker & Docker Compose (Containerization)
+
+Jenkins (Automated CI/CD pipelines)
+
+📂 Project Structure
+Plaintext
 PREPHUB/
 │
-├── client/         # Frontend React App
-├── server/         # Backend Express Server
-├── models/         # MongoDB Models
-├── routes/         # API Routes
-├── controllers/    # Backend Logic
-├── middleware/     # Authentication Middleware
-├── socket/         # Real-time Chat Logic
-└── README.md
+├── client/                  # Frontend React App (Vite + Tailwind)
+├── server/                  # Main Backend Node.js/Express Server
+├── demo-maven-service/      # Basic Maven assignment integration
+├── .github/                 # GitHub repository configurations
+├── docker-compose.yml       # Orchestration for multi-container deployment
+├── Jenkinsfile              # Jenkins CI/CD pipeline definitions
+├── jenkins.war              # Local Jenkins binary for pipeline execution
+├── move_files.js            # Build/Deployment utility script
+├── Project_Report.md        # Detailed project documentation
+└── README.md                # Project overview
+🚀 Getting Started
+Prerequisites
+Node.js (v18+)
+
+Docker & Docker Compose
+
+MongoDB Instance (Local or Atlas)
+
+Gemini API Key
