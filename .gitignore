@@ -29,3 +29,9 @@ uploads/
 client/node_modules/
 client/.env
 client/dist/
+
+# Jenkins binary (too large for GitHub - 95MB)
+jenkins.war
+
+# Maven build output
+demo-maven-service/target/
