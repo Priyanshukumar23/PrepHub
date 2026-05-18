@@ -734,7 +734,7 @@ function generateDownloadableResumeHTML(data, template) {
                     <div class="profile-image">
                         <img src="${imageData}" alt="Profile Picture" 
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='block'; console.error('Image failed to load');"
-                             onload="console.log('Image loaded successfully')">
+                             onload="console.log('Image loaded successfully')" />
                         <div style="display: none; text-align: center; padding: 20px; color: #666;">
                             <i class="fas fa-user-circle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
                             <p>Profile Image</p>
@@ -1130,7 +1130,362 @@ function changeTemplate() {
     updatePreview();
 }
 
-// Generate and Download Resume
+// Helper to construct fully compiled HTML string for a resume
+function getResumeHTML(data) {
+    // Ensure the image data is properly formatted
+    let imageData = data.profileImage;
+    if (imageData && !imageData.startsWith('data:image/')) {
+        imageData = `data:image/jpeg;base64,${imageData}`;
+    }
+    
+    return `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>${data.firstName} ${data.lastName} - Resume</title>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
+            <style>
+                @page {
+                    size: A4;
+                    margin: 0;
+                }
+                
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+                
+                body {
+                    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    line-height: 1.6;
+                    color: #333;
+                    background: white;
+                    padding: 0;
+                    margin: 0;
+                }
+                
+                .resume-container {
+                    max-width: 210mm;
+                    margin: 0 auto;
+                    background: white;
+                    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                }
+                
+                /* Header Styles */
+                .resume-header {
+                    background-color: #667eea;
+                    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: #ffffff;
+                    padding: 2.5rem;
+                }
+                
+                .header-content {
+                    width: 100%;
+                }
+                
+                .profile-image {
+                    display: inline-block;
+                    width: 120px;
+                    vertical-align: middle;
+                }
+                
+                .profile-image img {
+                    width: 120px;
+                    height: 120px;
+                    border-radius: 60px;
+                    border: 4px solid rgba(255, 255, 255, 0.3);
+                }
+                
+                .header-text {
+                    display: inline-block;
+                    width: 70%;
+                    padding-left: 2rem;
+                    vertical-align: middle;
+                }
+                
+                .header-text h1 {
+                    color: #ffffff;
+                    font-size: 2.8rem;
+                    font-weight: 700;
+                    margin-bottom: 0.5rem;
+                }
+                
+                .job-title {
+                    color: #ffffff;
+                    font-size: 1.4rem;
+                    font-weight: 400;
+                    opacity: 0.9;
+                    margin-bottom: 0.75rem;
+                }
+                
+                .contact-info {
+                    color: #ffffff;
+                    font-size: 0.95rem;
+                    margin-top: 0.5rem;
+                }
+                
+                .contact-info span {
+                    color: #ffffff;
+                    display: inline-block;
+                    margin-right: 1.5rem;
+                    margin-bottom: 0.5rem;
+                }
+                
+                .contact-info i {
+                    width: 18px;
+                    color: rgba(255, 255, 255, 0.8);
+                    margin-right: 0.25rem;
+                }
+                
+                /* Main Content */
+                .resume-main {
+                    display: table;
+                    width: 100%;
+                    table-layout: fixed;
+                }
+                
+                .left-column {
+                    display: table-cell;
+                    width: 35%;
+                    background: #f8fafc;
+                    padding: 2rem;
+                    border-right: 1px solid #e2e8f0;
+                    vertical-align: top;
+                }
+                
+                .right-column {
+                    display: table-cell;
+                    width: 65%;
+                    padding: 2rem;
+                    background: white;
+                    vertical-align: top;
+                }
+                
+                /* Section Styles */
+                .resume-section {
+                    margin-bottom: 2rem;
+                }
+                
+                .resume-section h2 {
+                    font-size: 1.25rem;
+                    font-weight: 600;
+                    color: #667eea;
+                    margin-bottom: 1rem;
+                    padding-bottom: 0.5rem;
+                    border-bottom: 2px solid #667eea;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                }
+                
+                .resume-section h2 i {
+                    font-size: 1rem;
+                    margin-right: 0.5rem;
+                }
+                
+                .resume-section h3 {
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    color: #1e293b;
+                    margin-bottom: 0.5rem;
+                }
+                
+                /* Skills */
+                .skills-list {
+                    margin-top: 0.5rem;
+                }
+                
+                .skill-tag {
+                    display: inline-block;
+                    background-color: #667eea;
+                    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    padding: 0.4rem 0.8rem;
+                    border-radius: 15px;
+                    font-size: 0.8rem;
+                    font-weight: 500;
+                    margin-right: 0.4rem;
+                    margin-bottom: 0.4rem;
+                }
+                
+                /* Technology Tags */
+                .technologies {
+                    margin-top: 0.25rem;
+                    margin-bottom: 0.5rem;
+                }
+                
+                .tech-tag {
+                    display: inline-block;
+                    padding: 0.35rem 0.7rem;
+                    border-radius: 12px;
+                    font-size: 0.75rem;
+                    font-weight: 500;
+                    color: white;
+                    margin-right: 0.4rem;
+                    margin-bottom: 0.4rem;
+                }
+                
+                .tech-tag.programming-lang {
+                    background-color: #10b981;
+                    background-image: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                }
+                
+                .tech-tag.tech-tool {
+                    background-color: #f59e0b;
+                    background-image: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+                }
+                
+                .tech-tag:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                }
+                
+                /* Experience and Education */
+                .experience-entry,
+                .education-entry {
+                    margin-bottom: 1.5rem;
+                    padding-bottom: 1rem;
+                    border-bottom: 1px solid #f1f5f9;
+                }
+                
+                .experience-entry:last-child,
+                .education-entry:last-child {
+                    border-bottom: none;
+                }
+                
+                .company,
+                .institution {
+                    color: #667eea;
+                    font-weight: 600;
+                    margin-bottom: 0.25rem;
+                }
+                
+                .job-title,
+                .degree {
+                    color: #1e293b;
+                    font-weight: 600;
+                    margin-bottom: 0.25rem;
+                }
+                
+                .period,
+                .location {
+                    color: #64748b;
+                    font-size: 0.9rem;
+                    margin-bottom: 0.5rem;
+                }
+                
+                .description {
+                    color: #475569;
+                    line-height: 1.6;
+                }
+                
+                /* Summary */
+                .summary-text {
+                    color: #475569;
+                    line-height: 1.7;
+                    font-size: 1rem;
+                }
+                
+                /* Print Styles */
+                @media print {
+                    body { margin: 0; }
+                    .resume-container { box-shadow: none; }
+                    .resume-main { page-break-inside: avoid; }
+                }
+                
+                /* Additional Professional Styling */
+                .resume-header::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+                    z-index: 1;
+                }
+                
+                .profile-image {
+                    position: relative;
+                    z-index: 3;
+                }
+                
+                .skill-tag {
+                    transition: all 0.3s ease;
+                }
+                
+                .skill-tag:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+                }
+                
+                .resume-section h2 {
+                    position: relative;
+                }
+                
+                .resume-section h2::after {
+                    content: '';
+                    position: absolute;
+                    bottom: -2px;
+                    left: 0;
+                    width: 50px;
+                    height: 2px;
+                    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+                }
+                
+                .experience-entry,
+                .education-entry {
+                    position: relative;
+                    padding-left: 1rem;
+                }
+                
+                .experience-entry::before,
+                .education-entry::before {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    top: 0.5rem;
+                    width: 6px;
+                    height: 6px;
+                    background: #667eea;
+                    border-radius: 50%;
+                }
+                
+                /* Responsive */
+                @media (max-width: 768px) {
+                    .resume-main {
+                        grid-template-columns: 1fr;
+                    }
+                    
+                    .left-column {
+                        border-right: none;
+                        border-bottom: 1px solid #e2e8f0;
+                    }
+                    
+                    .header-content {
+                        flex-direction: column;
+                        text-align: center;
+                    }
+                    
+                    .profile-image {
+                        align-self: center;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="resume-container">
+                ${generateDownloadableResumeHTML(data, currentTemplate)}
+            </div>
+        </body>
+        </html>
+    `;
+}
+
+// Generate and Download Resume (True PDF compilation via Java Microservice)
 async function generateResume() {
     const formData = new FormData(document.getElementById('resumeForm'));
     const resumeData = {
@@ -1158,32 +1513,45 @@ async function generateResume() {
         return;
     }
 
-    // Debug: Log image data to console
-    if (resumeData.profileImage) {
-        console.log('Profile image data length:', resumeData.profileImage.length);
-        console.log('Profile image data starts with:', resumeData.profileImage.substring(0, 50));
-    }
+    showNotification('Generating ATS-Friendly PDF...', 'info');
 
     try {
-        const response = await fetch('/api/generate-pdf', {
+        // 1. Generate full HTML content using active template
+        const htmlContent = getResumeHTML(resumeData);
+
+        // 2. Call the MERN Backend which proxies to our Java PDF Service
+        const response = await fetch('/api/resume/download', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ resumeData })
+            body: JSON.stringify({ html: htmlContent })
         });
 
         if (response.ok) {
-            const result = await response.json();
-            showNotification('Resume generated successfully!', 'success');
+            // 3. Receive the raw PDF binary stream
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
             
-            // For now, we'll create a simple HTML download
-            // In a real application, you'd use a PDF generation library
+            // 4. Download it as a PDF
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${resumeData.firstName}_${resumeData.lastName}_Resume.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('ATS-Friendly PDF downloaded successfully!', 'success');
+        } else {
+            console.error('PDF Generation failed on server');
+            showNotification('PDF generation failed. Downloading HTML fallback...', 'warning');
             downloadResumeAsHTML(resumeData);
         }
     } catch (error) {
-        console.error('Error generating resume:', error);
-        showNotification('Error generating resume. Please try again.', 'error');
+        console.error('Error generating PDF:', error);
+        showNotification('Connection error. Downloading HTML fallback...', 'warning');
+        downloadResumeAsHTML(resumeData);
     }
 }
 

@@ -32,10 +32,10 @@ pipeline {
             }
         }
 
-        stage('Build Maven Module') {
+        stage('Build PDF Maven Service') {
             steps {
-                echo 'Building Maven Demo Service...'
-                dir('demo-maven-service') {
+                echo 'Building PDF Maven Service...'
+                dir('pdf-maven-service') {
                     bat 'mvn clean package'
                 }
             }

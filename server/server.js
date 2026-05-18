@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
 const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
-
+const axios = require('axios');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -421,20 +421,40 @@ app.get('/api/download/:id', (req, res) => {
 });
 
 // Generate PDF resume
-app.post('/api/generate-pdf', (req, res) => {
-    const { resumeData } = req.body;
+app.post('/api/resume/download', async (req, res) => {
+    try {
+        const userHtml = req.body.html; // The HTML from your React frontend
 
-    // In a real application, you would use a library like puppeteer or jsPDF
-    // For now, we'll return the data as JSON
-    const generatedResume = {
-        id: resumeCounter++,
-        ...resumeData,
-        type: 'generated',
-        createdAt: new Date().toISOString()
-    };
+        // Call your amazing new Java Microservice!
+        let response;
+        try {
+            response = await axios.post('http://pdf-maven-service:8080/generate-pdf', userHtml, {
+                headers: { 'Content-Type': 'text/html' },
+                responseType: 'arraybuffer' // We are expecting a binary PDF file back
+            });
+        } catch (dockerErr) {
+            // If we cannot resolve pdf-maven-service (ENOTFOUND) or connection is refused (ECONNREFUSED),
+            // it means we might be running the server locally outside Docker. Try localhost.
+            if (dockerErr.code === 'ENOTFOUND' || dockerErr.code === 'ECONNREFUSED') {
+                console.log("[PDF Service] Failed to connect to pdf-maven-service inside docker. Trying local fallback (localhost:8082)...");
+                response = await axios.post('http://localhost:8082/generate-pdf', userHtml, {
+                    headers: { 'Content-Type': 'text/html' },
+                    responseType: 'arraybuffer'
+                });
+            } else {
+                throw dockerErr;
+            }
+        }
 
-    resumes.push(generatedResume);
-    res.json(generatedResume);
+        // Send the PDF directly to the React frontend to download
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename=resume.pdf');
+        res.send(response.data);
+
+    } catch (error) {
+        console.error("Failed to generate PDF:", error.message);
+        res.status(500).json({ error: "PDF generation failed" });
+    }
 });
 
 // Evaluate code using Gemini API
