@@ -38,7 +38,7 @@ jobs:
         distribution: 'temurin'
 
     - name: Build Maven Module
-      working-directory: ./demo-maven-service
+      working-directory: ./pdf-maven-service
       run: mvn -B package --file pom.xml
 
     - name: Build Docker Images (Simulation)
