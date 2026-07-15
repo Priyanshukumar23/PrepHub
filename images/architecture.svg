@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 540" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B0F19" />
+      <stop offset="50%" stop-color="#111827" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+    
+    <!-- Card Gradients -->
+    <linearGradient id="frontend-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E40AF" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.85" />
+    </linearGradient>
+    <linearGradient id="backend-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#065F46" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#10B981" stop-opacity="0.85" />
+    </linearGradient>
+    <linearGradient id="db-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#166534" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#22C55E" stop-opacity="0.85" />
+    </linearGradient>
+    <linearGradient id="maven-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9A3412" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#F97316" stop-opacity="0.85" />
+    </linearGradient>
+    <linearGradient id="gemini-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6B21A8" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#A855F7" stop-opacity="0.85" />
+    </linearGradient>
+
+    <!-- Network Box Style -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#60A5FA"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34D399"/>
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#C084FC"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="920" height="540" rx="16" fill="url(#bg-gradient)" />
+  <rect x="10" y="10" width="900" height="520" rx="12" fill="none" stroke="#334155" stroke-width="2" />
+
+  <!-- Title Section -->
+  <text x="460" y="45" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="800" fill="#F8FAFC" letter-spacing="1">
+    PREPHUB MICROSERVICES &amp; DOCKER ARCHITECTURE
+  </text>
+  <text x="460" y="68" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="500" fill="#94A3B8">
+    Multi-Container Containerized System across Docker Bridge Network (prephub-network)
+  </text>
+
+  <!-- Docker Bridge Network Bounding Box -->
+  <rect x="40" y="90" width="660" height="410" rx="16" fill="#1E293B" fill-opacity="0.4" stroke="#38BDF8" stroke-width="2" stroke-dasharray="8,4" />
+  <rect x="60" y="102" width="185" height="26" rx="6" fill="#0369A1" />
+  <text x="152" y="120" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF">
+    🌐 Docker Bridge Network
+  </text>
+
+  <!-- External User/Browser -->
+  <g transform="translate(735, 120)" filter="url(#shadow)">
+    <rect width="150" height="95" rx="10" fill="#1E293B" stroke="#64748B" stroke-width="2"/>
+    <circle cx="75" cy="35" r="16" fill="#3B82F6" fill-opacity="0.2"/>
+    <text x="75" y="40" text-anchor="middle" font-size="18">👤</text>
+    <text x="75" y="65" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700" fill="#F8FAFC">Client / User</text>
+    <text x="75" y="82" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" fill="#94A3B8">Web Browser App</text>
+  </g>
+
+  <!-- External Cloud Gemini AI -->
+  <g transform="translate(735, 300)" filter="url(#shadow)">
+    <rect width="150" height="110" rx="10" fill="url(#gemini-grad)" stroke="#C084FC" stroke-width="2"/>
+    <text x="75" y="36" text-anchor="middle" font-size="22">✨</text>
+    <text x="75" y="62" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="800" fill="#FFFFFF">Google Gemini AI</text>
+    <text x="75" y="80" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" fill="#E9D5FF">Cloud AI API</text>
+    <text x="75" y="96" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" fill="#D8B4FE">Code &amp; Interview Eval</text>
+  </g>
+
+  <!-- MICROSERVICE 1: Frontend Container -->
+  <g transform="translate(65, 155)" filter="url(#shadow)">
+    <rect width="260" height="135" rx="12" fill="url(#frontend-grad)" stroke="#60A5FA" stroke-width="2"/>
+    <rect x="15" y="15" width="45" height="20" rx="4" fill="#1D4ED8"/>
+    <text x="37" y="29" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="#EFF6FF">PORT 80</text>
+    <text x="145" y="32" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="800" fill="#FFFFFF">🖥️ Frontend Service</text>
+    <text x="145" y="52" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#BFDBFE">prephub-frontend</text>
+    <line x1="20" y1="64" x2="240" y2="64" stroke="#60A5FA" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="30" y="85" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" fill="#FFFFFF">• React.js + Vite UI</text>
+    <text x="30" y="104" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" fill="#FFFFFF">• Multi-Stage Docker Build</text>
+    <text x="30" y="123" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" fill="#FFFFFF">• Served via Nginx Web Server</text>
+  </g>
+
+  <!-- MICROSERVICE 2: Backend Container -->
+  <g transform="translate(395, 155)" filter="url(#shadow)">
+    <rect width="275" height="135" rx="12" fill="url(#backend-grad)" stroke="#34D399" stroke-width="2"/>
+    <rect x="15" y="15" width="60" height="20" rx="4" fill="#047857"/>
+    <text x="45" y="29" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="#ECFDF5">PORT 3000</text>
+    <text x="165" y="32" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="800" fill="#FFFFFF">⚙️ Backend Service</text>
+    <text x="165" y="52" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#A7F3D0">prephub-backend</text>
+    <line x1="20" y1="64" x2="255" y2="64" stroke="#34D399" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="30" y="85" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" fill="#FFFFFF">• Node.js &amp; Express REST API</text>
+    <text x="30" y="104" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" fill="#FFFFFF">• Auth, ATS &amp; Resume Processing</text>
+    <text x="30" y="123" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" fill="#FFFFFF">• AI Prompt &amp; Code Evaluation</text>
+  </g>
+
+  <!-- MICROSERVICE 3: Database Container -->
+  <g transform="translate(395, 335)" filter="url(#shadow)">
+    <rect width="275" height="135" rx="12" fill="url(#db-grad)" stroke="#4ADE80" stroke-width="2"/>
+    <rect x="15" y="15" width="65" height="20" rx="4" fill="#15803D"/>
+    <text x="47" y="29" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="#F0FDF4">PORT 27017</text>
+    <text x="165" y="32" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="800" fill="#FFFFFF">🍃 Database Service</text>
+    <text x="165" y="52" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#BBF7D0">prephub-mongodb</text>
+    <line x1="20" y1="64" x2="255" y2="64" stroke="#4ADE80" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="30" y="85" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" fill="#FFFFFF">• Official MongoDB Engine</text>
+    <text x="30" y="104" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" fill="#FFFFFF">• Persistent Storage Volume</text>
+    <text x="30" y="123" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" fill="#FFFFFF">• Volume: mongo-data:/data/db</text>
+  </g>
+
+  <!-- MICROSERVICE 4: PDF Maven Service -->
+  <g transform="translate(65, 335)" filter="url(#shadow)">
+    <rect width="260" height="135" rx="12" fill="url(#maven-grad)" stroke="#FB923C" stroke-width="2"/>
+    <rect x="15" y="15" width="65" height="20" rx="4" fill="#C2410C"/>
+    <text x="47" y="29" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="#FFF7ED">PORT 8082</text>
+    <text x="155" y="32" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="800" fill="#FFFFFF">📦 Maven Service</text>
+    <text x="155" y="52" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#FED7AA">prephub-pdf-service</text>
+    <line x1="20" y1="64" x2="240" y2="64" stroke="#FB923C" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="30" y="85" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" fill="#FFFFFF">• Java 11 / Maven Lifecycle</text>
+    <text x="30" y="104" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" fill="#FFFFFF">• PDF &amp; Document Module</text>
+    <text x="30" y="123" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" fill="#FFFFFF">• Standalone Microservice</text>
+  </g>
+
+  <!-- ARROWS & CONNECTIONS -->
+  
+  <!-- Client to Frontend (HTTP 80) -->
+  <path d="M 735 168 L 335 168" stroke="#60A5FA" stroke-width="3" stroke-dasharray="6,4" marker-end="url(#arrow)" />
+  <rect x="525" y="142" width="95" height="22" rx="4" fill="#1E293B" stroke="#60A5FA" stroke-width="1"/>
+  <text x="572" y="157" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#60A5FA">HTTP :80</text>
+
+  <!-- Frontend to Backend (REST API) -->
+  <path d="M 325 222 L 385 222" stroke="#34D399" stroke-width="3" marker-end="url(#arrow-green)" />
+  <rect x="332" y="196" width="46" height="20" rx="3" fill="#065F46" />
+  <text x="355" y="210" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" fill="#A7F3D0">REST</text>
+
+  <!-- Backend to Database (MongoDB URI) -->
+  <path d="M 532 290 L 532 325" stroke="#34D399" stroke-width="3" marker-end="url(#arrow-green)" />
+  <rect x="538" y="297" width="80" height="20" rx="3" fill="#166534" />
+  <text x="578" y="311" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" fill="#BBF7D0">MONGO_URI</text>
+
+  <!-- Backend to Gemini AI -->
+  <path d="M 670 235 L 810 235 L 810 290" stroke="#C084FC" stroke-width="3" stroke-dasharray="5,5" marker-end="url(#arrow-purple)" />
+  <rect x="710" y="212" width="76" height="20" rx="3" fill="#581C87" />
+  <text x="748" y="226" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" fill="#E9D5FF">AI REST API</text>
+
+  <!-- Backend to Maven Service -->
+  <path d="M 395 402 L 335 402" stroke="#FB923C" stroke-width="3" stroke-dasharray="4,4" marker-end="url(#arrow)" />
+  <rect x="340" y="410" width="50" height="20" rx="3" fill="#9A3412" />
+  <text x="365" y="424" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" fill="#FED7AA">HTTP</text>
+
+</svg>

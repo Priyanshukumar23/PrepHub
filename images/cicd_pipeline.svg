@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 560" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bg-gradient-cicd" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="50%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+
+    <!-- Stage Box Gradients -->
+    <linearGradient id="git-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#BE123C" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#F43F5E" stop-opacity="0.9" />
+    </linearGradient>
+    <linearGradient id="jenkins-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1D4ED8" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.9" />
+    </linearGradient>
+    <linearGradient id="stage-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#475569" stop-opacity="0.9" />
+    </linearGradient>
+    <linearGradient id="docker-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284C7" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.9" />
+    </linearGradient>
+    <linearGradient id="deploy-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#10B981" stop-opacity="0.9" />
+    </linearGradient>
+
+    <!-- Filter Shadow -->
+    <filter id="shadow-cicd" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+
+    <!-- Arrows -->
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38BDF8"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34D399"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="920" height="560" rx="16" fill="url(#bg-gradient-cicd)" />
+  <rect x="10" y="10" width="900" height="540" rx="12" fill="none" stroke="#334155" stroke-width="2" />
+
+  <!-- Title Section -->
+  <text x="460" y="42" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="800" fill="#F8FAFC" letter-spacing="1">
+    PREPHUB AUTOMATED CI/CD &amp; DEVOPS PIPELINE
+  </text>
+  <text x="460" y="65" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="500" fill="#94A3B8">
+    Continuous Integration &amp; Deployment via Jenkins, GitHub Actions, Docker Compose &amp; Maven
+  </text>
+
+  <!-- STEP 1: Git Repository / Developer Push -->
+  <g transform="translate(40, 110)" filter="url(#shadow-cicd)">
+    <rect width="180" height="110" rx="10" fill="url(#git-grad)" stroke="#FDA4AF" stroke-width="2"/>
+    <text x="90" y="38" text-anchor="middle" font-size="26">🐙</text>
+    <text x="90" y="66" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="800" fill="#FFFFFF">Git Repository</text>
+    <text x="90" y="85" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#FFE4E6">GitHub Push / PR</text>
+  </g>
+
+  <!-- Arrow from Git to CI Trigger -->
+  <path d="M 220 165 L 285 165" stroke="#38BDF8" stroke-width="3" marker-end="url(#arrow-blue)" />
+  <text x="252" y="155" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#38BDF8">Trigger</text>
+
+  <!-- STEP 2: Jenkins Orchestration Server -->
+  <g transform="translate(290, 110)" filter="url(#shadow-cicd)">
+    <rect width="210" height="110" rx="10" fill="url(#jenkins-grad)" stroke="#93C5FD" stroke-width="2"/>
+    <text x="105" y="38" text-anchor="middle" font-size="26">👨‍✈️</text>
+    <text x="105" y="66" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="800" fill="#FFFFFF">Jenkins CI Server</text>
+    <text x="105" y="85" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#DBEAFE">Declarative Jenkinsfile</text>
+  </g>
+
+  <!-- Arrow from Jenkins to GitHub Actions/Cloud Check -->
+  <path d="M 500 165 L 565 165" stroke="#38BDF8" stroke-width="3" marker-end="url(#arrow-blue)" />
+  
+  <!-- STEP 3: GitHub Actions Cloud Check -->
+  <g transform="translate(570, 110)" filter="url(#shadow-cicd)">
+    <rect width="310" height="110" rx="10" fill="url(#stage-grad)" stroke="#94A3B8" stroke-width="2"/>
+    <text x="155" y="36" text-anchor="middle" font-size="22">⚡</text>
+    <text x="155" y="62" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="800" fill="#FFFFFF">GitHub Actions Cloud Workflow</text>
+    <text x="155" y="82" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="500" fill="#CBD5E1">Automated PR Check &amp; Multi-environment Tests</text>
+    <text x="155" y="98" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="#38BDF8">ci.yml (Node + Java JDK 11)</text>
+  </g>
+
+  <!-- Pipeline Stages Bounding Box -->
+  <rect x="40" y="250" width="840" height="270" rx="14" fill="#1E293B" fill-opacity="0.6" stroke="#475569" stroke-width="2" stroke-dasharray="6,4" />
+  <rect x="60" y="262" width="220" height="26" rx="6" fill="#334155" />
+  <text x="170" y="280" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF">
+    🛠️ Automated Build &amp; Test Stages
+  </text>
+
+  <!-- Stage 1: Checkout -->
+  <g transform="translate(60, 310)" filter="url(#shadow-cicd)">
+    <rect width="145" height="90" rx="8" fill="#334155" stroke="#64748B" stroke-width="1.5"/>
+    <text x="72" y="36" text-anchor="middle" font-size="18">📥</text>
+    <text x="72" y="58" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" fill="#F8FAFC">Stage 1</text>
+    <text x="72" y="76" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" fill="#94A3B8">Checkout SCM</text>
+  </g>
+
+  <path d="M 205 355 L 225 355" stroke="#38BDF8" stroke-width="2.5" marker-end="url(#arrow-blue)" />
+
+  <!-- Stage 2: Backend Build -->
+  <g transform="translate(230, 310)" filter="url(#shadow-cicd)">
+    <rect width="145" height="90" rx="8" fill="#334155" stroke="#64748B" stroke-width="1.5"/>
+    <text x="72" y="36" text-anchor="middle" font-size="18">🟢</text>
+    <text x="72" y="58" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" fill="#F8FAFC">Stage 2</text>
+    <text x="72" y="76" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" fill="#94A3B8">Node Backend Test</text>
+  </g>
+
+  <path d="M 375 355 L 395 355" stroke="#38BDF8" stroke-width="2.5" marker-end="url(#arrow-blue)" />
+
+  <!-- Stage 3: Frontend Build -->
+  <g transform="translate(400, 310)" filter="url(#shadow-cicd)">
+    <rect width="145" height="90" rx="8" fill="#334155" stroke="#64748B" stroke-width="1.5"/>
+    <text x="72" y="36" text-anchor="middle" font-size="18">⚛️</text>
+    <text x="72" y="58" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" fill="#F8FAFC">Stage 3</text>
+    <text x="72" y="76" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" fill="#94A3B8">Vite UI Build</text>
+  </g>
+
+  <path d="M 545 355 L 565 355" stroke="#38BDF8" stroke-width="2.5" marker-end="url(#arrow-blue)" />
+
+  <!-- Stage 4: Maven Build -->
+  <g transform="translate(570, 310)" filter="url(#shadow-cicd)">
+    <rect width="145" height="90" rx="8" fill="#334155" stroke="#64748B" stroke-width="1.5"/>
+    <text x="72" y="36" text-anchor="middle" font-size="18">☕</text>
+    <text x="72" y="58" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" fill="#F8FAFC">Stage 4</text>
+    <text x="72" y="76" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" fill="#94A3B8">Maven JAR Build</text>
+  </g>
+
+  <!-- Arrow down from Stage 4 to Docker Build -->
+  <path d="M 715 355 L 750 355" stroke="#38BDF8" stroke-width="2.5" marker-end="url(#arrow-blue)" />
+
+  <!-- Stage 5: Docker Compose Build -->
+  <g transform="translate(755, 310)" filter="url(#shadow-cicd)">
+    <rect width="110" height="90" rx="8" fill="url(#docker-grad)" stroke="#7DD3FC" stroke-width="2"/>
+    <text x="55" y="36" text-anchor="middle" font-size="18">🐳</text>
+    <text x="55" y="58" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">Stage 5</text>
+    <text x="55" y="76" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600" fill="#E0F2FE">Docker Build</text>
+  </g>
+
+  <!-- Arrow from Docker Build to Final Deployment -->
+  <path d="M 810 400 L 810 435 L 535 435" stroke="#34D399" stroke-width="3" marker-end="url(#arrow-green)" />
+  <text x="680" y="426" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#34D399">Build Success</text>
+
+  <!-- FINAL STAGE: Container Deployment -->
+  <g transform="translate(230, 415)" filter="url(#shadow-cicd)">
+    <rect width="300" height="88" rx="10" fill="url(#deploy-grad)" stroke="#6EE7B7" stroke-width="2"/>
+    <text x="150" y="32" text-anchor="middle" font-size="20">🚀</text>
+    <text x="150" y="54" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="800" fill="#FFFFFF">Stage 6: Deploy Containers</text>
+    <text x="150" y="74" text-anchor="middle" font-family="monospace" font-size="12" font-weight="bold" fill="#D1FAE5">docker compose up -d</text>
+  </g>
+
+</svg>
